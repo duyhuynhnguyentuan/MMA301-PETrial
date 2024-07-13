@@ -6,18 +6,20 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { FavoritesContext } from '../context/FavoritesContext';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { Categories } from '../../db';
 const HomeScreen = () => {
   const [categories, setCategories] = useState([]);
   const navigation = useNavigation();
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
 
   useEffect(() => {
-    axios.get('https://667a8dfbbd627f0dcc8f7e00.mockapi.io/categories')
-      .then(response => {
-        setCategories(response.data);
-      })
-      .catch(error => console.error(error));
+    // axios.get('https://667a8dfbbd627f0dcc8f7e00.mockapi.io/categories')
+    //   .then(response => {
+    //     setCategories(response.data);
+    //   })
+    //   .catch(error => console.error(error));
+    setCategories(Categories);
+    // })
   }, []);
 
   const getCategoryName = (itemId) => {
@@ -66,7 +68,7 @@ const HomeScreen = () => {
       }))}
       renderItem={renderItem}
       renderSectionHeader={renderSectionHeader}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={(item, index) => `${item.id}-${index}`}
       contentContainerStyle={styles.container}
     />
     // Uncomment the next lines to use FlatList instead of SectionList
